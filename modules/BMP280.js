@@ -68,10 +68,10 @@ function rshift (num, bits) {
 	return num / Math.pow(2,bits)
 }
 
-function read_raw (cmd) {
-	var raw = this.device.readU16 (cmd, false);
+function read_raw (that, cmd) {
+	var raw = that.device.readU16 (cmd, false);
 	raw = raw << 8;
-	raw = raw | this.device.readU8 (cmd+2);
+	raw = raw | that.device.readU8 (cmd+2);
 	raw = raw >> 4;
 	debug ("read_raw: " + raw.toString(16));
 	return raw;
@@ -140,7 +140,7 @@ BMP280.prototype.load_calibration = function load_calibration (from_datasheet) {
 * @returns {string} data - the data read
 */
 BMP280.prototype.read_temp = function read_temp () {
-	var temp = this.device.read_raw (BMP280_TEMPDATA);
+	var temp = read_raw (this, BMP280_TEMPDATA);
 	temp = compensate_temp (temp)
 	temp = ((temp * 5 + 128) >> 8) / 100;
 	debug ("read_temp: " + temp);
@@ -152,8 +152,8 @@ BMP280.prototype.read_temp = function read_temp () {
 * @returns {string} data - the data read
 */
 BMP280.prototype.read_pressure = function read_pressure () {
-	var temp = compensate_temp (read_raw(BMP280_TEMPDATA))
-	var raw_pressure = read_raw(BMP280_PRESSUREDATA)
+	var temp = compensate_temp (read_raw(this, BMP280_TEMPDATA))
+	var raw_pressure = read_raw(this, BMP280_PRESSUREDATA)
 	var p1 = temp - 128000
 	var p2 = p1 * p1 * cal_p6
 	p2 += lshift ((p1 * cal_p5), 17)
