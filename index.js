@@ -28,7 +28,7 @@ var t = bmp280.read_temp ();
 debug ("I think the temperature is " + t + "C");
 debug ("I think the temperature is " + (t*9/5 +32) + "F");
 
-var p = bmp280read_pressure ();
+var p = bmp280.read_pressure ();
 debug ("I think the pressure is " + p/1000 + "kPa");
 debug ("I think the pressure is " + p/1000 * 0.2952998 + "inHg");
 
