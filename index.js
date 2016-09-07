@@ -22,7 +22,7 @@ debug ("I think the pressure is " + p/1000 + "kPa");
 debug ("I think the pressure is " + p/1000 * 0.2952998 + "inHg");
 
 debug ("calibrating...")
-load_calibration (false)
+bmp280.load_calibration (false)
 
 var t = bmp280.read_temp ();
 debug ("I think the temperature is " + t + "C");
