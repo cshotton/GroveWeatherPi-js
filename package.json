@@ -1,5 +1,5 @@
 {
-  "name": "i2ctest",
+  "name": "GroveWeatherPi-js",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,6 +11,8 @@
   "author": "cshotton@gmail.com",
   "license": "ISC",
   "dependencies": {
-  	"i2c-bus" : "*"
+    "debug": "*",
+  	"i2c-bus" : "*",
+    "app-root-path": "*",
   }
 }
