@@ -13,6 +13,6 @@
   "dependencies": {
     "debug": "*",
   	"i2c-bus" : "*",
-    "app-root-path": "*",
+    "app-root-path": "*"
   }
 }
