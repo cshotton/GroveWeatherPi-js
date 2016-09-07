@@ -56,7 +56,7 @@ i2cDevice.prototype.readU16 = function readU16 (cmd, little_endian) {
 * @returns {string} data - the data read
 */
 i2cDevice.prototype.readU8 = function readU8 (cmd) {
-	var res = this.bus.readByteSync (this.addr, cmd) & 0xFF;
+	var res = this.bus.readByteSync (this.address, cmd) & 0xFF;
 	debug ("readU8: " + res.toString(16));
 	return res;
 }
