@@ -1,0 +1,16 @@
+{
+  "name": "i2ctest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+  	"xprestart": "npm install",
+  	"start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "cshotton@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+  	"i2c-bus" : "*"
+  }
+}
