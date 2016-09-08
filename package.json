@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
   	"xprestart": "npm install",
-  	"start": "node index.js",
+  	"start": "DEBUG=main node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "cshotton@gmail.com",

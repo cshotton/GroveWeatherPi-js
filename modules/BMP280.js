@@ -1,6 +1,7 @@
 // BMP280.js
 /**
- * BMP280.js -  object for communicating with BMP280 devices
+ * BMP280.js -  object for communicating with BMP280 devices. Requires a "bus" object
+ * to be passed to the constructor as created by the i2c-bus npm package
  * @module BMP280
  * @author cshotton
  */
@@ -88,7 +89,7 @@ function compensate_temp (raw_temp) {
 }
 
 /**
-* load calibration data from data sheet or chip
+* load calibration data from data sheet or chip registers
 * @param {string} from_datasheet - true if datasheet values are to be used. from chip otherwise
 */
 BMP280.prototype.load_calibration = function load_calibration (from_datasheet) {
@@ -149,7 +150,7 @@ BMP280.prototype.read_temp = function read_temp () {
 
 /**
 * synchronously read the pressure
-* @returns {string} data - the data read
+* @returns {string} data - the pressure in Pascals
 */
 BMP280.prototype.read_pressure = function read_pressure () {
 	var temp = compensate_temp (read_raw(this, BMP280_TEMPDATA))
@@ -171,6 +172,35 @@ BMP280.prototype.read_pressure = function read_pressure () {
 	p = rshift((p + p1 + p2), 8) + lshift((cal_p7), 4)
 	
 	return p/256
+}
+
+/**
+* synchronously read the altitude in meters
+* @param {string} sealevel_pa - Pa pressure at sealevel. defaults to 101325.0
+* @returns {string} data - the data read
+*/
+BMP280.prototype.read_altitude = function read_altitude (sealevel_pa) {
+	if (sealevel_pa === undefined || sealevel_pa === null || sealevel_pa == 0)
+		sealevel_pa=101325.0;
+		
+	var pressure = this.read_pressure()
+	var altitude = 44330.0 * (1.0 - Math.pow(pressure / sealevel_pa, (1.0 / 5.255)))
+	debug ('Altitude ' + altitude + "m");
+	return altitude;
+}
+
+/**
+* Calculates the pressure at sea level when given a known altitude in meters. Returns a value in Pascals.
+* @param {string} altitude_m - known local altitude, defaults to 0
+* @returns {string} data - returns sea level pressure in pascals
+*/
+BMP280.prototype.read_sealevel_pressure = function read_pressure (altitude_m) {
+	if (altitude_m === undefined || altitude_m === null)
+		altitude_m=0.0;
+	var pressure = this.read_pressure()
+	var p0 = pressure / Math.pow(1.0 - altitude_m / 44330.0, 5.255)
+	debug('Sealevel pressure ' + p0 + "Pa")
+	return p0
 }
 
 module.exports = BMP280;
