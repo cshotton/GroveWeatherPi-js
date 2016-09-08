@@ -18,8 +18,8 @@ debug ("I think the temperature is " + t + "C");
 debug ("I think the temperature is " + (t*9/5 +32) + "F");
 
 var p = bmp280.read_pressure ();
-debug ("I think the pressure is " + p/1000 + "kPa");
-debug ("I think the pressure is " + p/1000 * 0.2952998 + "inHg");
+debug ("I think the pressure is " + p/1000 + " kPa");
+debug ("I think the pressure is " + p/1000 * 0.2952998 + " inHg");
 
 debug ("calibrating...")
 bmp280.load_calibration (false)
@@ -29,7 +29,13 @@ debug ("I think the temperature is " + t + "C");
 debug ("I think the temperature is " + (t*9/5 +32) + "F");
 
 var p = bmp280.read_pressure ();
-debug ("I think the pressure is " + p/1000 + "kPa");
-debug ("I think the pressure is " + p/1000 * 0.2952998 + "inHg");
+debug ("I think the pressure is " + p/1000 + " kPa");
+debug ("I think the pressure is " + p/1000 * 0.2952998 + " inHg");
+
+var alt = bmp280.read_altitude();
+debug ("Altitude is " + alt + " m");
+
+var slp = bmp280.read_sealevel_pressure (alt);
+debug ("Sea level pressure: " + slp + " Pa");
 
 debug ("Done.");
